@@ -1,7 +1,7 @@
-package edu.baylor.ecs.jms.controller;
+package edu.baylor.ecs.csi5324.controller;
 
-import edu.baylor.ecs.jms.jms.Sender;
-import edu.baylor.ecs.jms.model.Email;
+import edu.baylor.ecs.csi5324.jms.Sender;
+import edu.baylor.ecs.csi5324.model.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

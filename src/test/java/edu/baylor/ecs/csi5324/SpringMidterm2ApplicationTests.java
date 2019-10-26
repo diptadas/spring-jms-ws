@@ -1,10 +1,10 @@
-package edu.baylor.ecs.jms;
+package edu.baylor.ecs.csi5324;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringJmsApplicationTests {
+class SpringMidterm2ApplicationTests {
 
     @Test
     void contextLoads() {

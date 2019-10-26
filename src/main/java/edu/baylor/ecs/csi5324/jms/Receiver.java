@@ -1,6 +1,6 @@
-package edu.baylor.ecs.jms.jms;
+package edu.baylor.ecs.csi5324.jms;
 
-import edu.baylor.ecs.jms.model.Email;
+import edu.baylor.ecs.csi5324.model.Email;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 

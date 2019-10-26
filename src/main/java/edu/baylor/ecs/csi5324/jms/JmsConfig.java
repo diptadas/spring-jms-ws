@@ -1,5 +1,6 @@
-package edu.baylor.ecs.jms.jms;
+package edu.baylor.ecs.csi5324.jms;
 
+import org.apache.activemq.broker.BrokerService;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,5 +30,14 @@ public class JmsConfig {
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("_type");
         return converter;
+    }
+
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public BrokerService broker() throws Exception {
+        final BrokerService broker = new BrokerService();
+        broker.addConnector("tcp://localhost:61616");
+        broker.addConnector("vm://localhost");
+        broker.setPersistent(false);
+        return broker;
     }
 }

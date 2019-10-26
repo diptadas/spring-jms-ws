@@ -1,4 +1,4 @@
-package edu.baylor.ecs.jms.model;
+package edu.baylor.ecs.csi5324.model;
 
 import lombok.*;
 
