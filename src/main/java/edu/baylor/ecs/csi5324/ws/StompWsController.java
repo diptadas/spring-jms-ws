@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @Slf4j
-public class WsController {
+public class StompWsController {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
