@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Raw Ws Client</title>
+</head>
+
+<body>
+<form name="publish">
+    <input type="text" name="message" maxlength="50"/>
+    <input type="submit" value="Send"/>
+</form>
+
+<form name="close">
+    <input type="submit" value="Close"/>
+</form>
+
+<div id="data"></div>
+
+<script type="text/javascript">
+    (function () {
+        var data = document.getElementById("data");
+        var conn = new WebSocket("ws://127.0.0.1:8080/raw");
+
+        conn.onclose = function (evt) {
+            data.innerHTML = data.innerHTML + '<br>' + 'connection closed';
+        }
+
+        conn.onmessage = function (evt) {
+            data.innerHTML = data.innerHTML + '<br>' + 'received' + evt.data;
+        }
+
+        document.forms.publish.onsubmit = function () {
+            data.innerHTML = data.innerHTML + '<br>' + 'sending ' + this.message.value;
+            conn.send(this.message.value);
+            return false;
+        };
+
+        document.forms.close.onsubmit = function () {
+            data.innerHTML = data.innerHTML + '<br>' + 'closing';
+            conn.close();
+            return false;
+        };
+    })();
+</script>
+
+</body>
+</html>
