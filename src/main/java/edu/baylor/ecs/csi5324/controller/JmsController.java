@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/email")
-public class EmailController {
+@RequestMapping("/jms")
+public class JmsController {
     @Autowired
     private Sender sender;
 
     @PostMapping("/send")
-    public void sendEmail(@RequestBody JmsMessage jmsMessage) {
+    public void sendJmsMessage(@RequestBody JmsMessage jmsMessage) {
         sender.send(jmsMessage);
     }
 }
