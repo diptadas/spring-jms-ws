@@ -14,9 +14,9 @@ public class Receiver {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
-    @JmsListener(destination = "mailbox", containerFactory = "myFactory")
+    @JmsListener(destination = "jmsDestination", containerFactory = "myFactory")
     public void receiveMessage(JmsMessage jmsMessage) {
-        log.info("Received <" + jmsMessage + ">");
+        log.info("Received jms message: " + jmsMessage);
 
         log.info("Creating event...");
         applicationEventPublisher.publishEvent(new MessageEvent(this, jmsMessage));

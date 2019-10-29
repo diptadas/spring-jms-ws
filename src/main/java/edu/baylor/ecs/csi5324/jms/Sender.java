@@ -13,7 +13,7 @@ public class Sender {
     private JmsTemplate jmsTemplate;
 
     public void send(JmsMessage jmsMessage) {
-        log.info("Sending an email message.");
-        jmsTemplate.convertAndSend("mailbox", jmsMessage);
+        log.info("Sending jms message: " + jmsMessage);
+        jmsTemplate.convertAndSend("jmsDestination", jmsMessage);
     }
 }

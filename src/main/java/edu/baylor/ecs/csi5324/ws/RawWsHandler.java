@@ -23,7 +23,7 @@ public class RawWsHandler extends TextWebSocketHandler implements ApplicationLis
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
-        log.info("Received " + message.getPayload());
+        log.info("Received message from ws client: " + message.getPayload());
 
         try {
             broadcast(new WsProduceMessage("generic reply"));
@@ -34,7 +34,7 @@ public class RawWsHandler extends TextWebSocketHandler implements ApplicationLis
 
     private void broadcast(WsProduceMessage message) throws IOException {
         TextMessage textMessage = new TextMessage(new Gson().toJson(message, WsProduceMessage.class));
-        log.info("Sending " + textMessage.getPayload());
+        log.info("Sending message to ws clients: " + textMessage.getPayload());
 
         for (WebSocketSession webSocketSession : sessions) {
             webSocketSession.sendMessage(textMessage);
@@ -43,7 +43,7 @@ public class RawWsHandler extends TextWebSocketHandler implements ApplicationLis
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
-        log.info("Connected");
+        log.info("Ws client connected");
         sessions.add(session);
         try {
             broadcast(new WsProduceMessage("connected"));
@@ -60,6 +60,7 @@ public class RawWsHandler extends TextWebSocketHandler implements ApplicationLis
 
     @Override
     public void onApplicationEvent(MessageEvent messageEvent) {
+        log.info("Received event...");
         try {
             broadcast(new WsProduceMessage(messageEvent.getJmsMessage().toString()));
         } catch (IOException e) {
