@@ -1,4 +1,4 @@
-package edu.baylor.ecs.csi5324.model;
+package edu.baylor.ecs.csi5324.message;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Email {
+public class JmsMessage {
     private String to;
     private String body;
 }

@@ -1,7 +1,7 @@
 package edu.baylor.ecs.csi5324.controller;
 
 import edu.baylor.ecs.csi5324.jms.Sender;
-import edu.baylor.ecs.csi5324.model.Email;
+import edu.baylor.ecs.csi5324.message.JmsMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +15,7 @@ public class EmailController {
     private Sender sender;
 
     @PostMapping("/send")
-    public void sendEmail(@RequestBody Email email) {
-        sender.send(email);
+    public void sendEmail(@RequestBody JmsMessage jmsMessage) {
+        sender.send(jmsMessage);
     }
 }

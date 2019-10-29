@@ -2,7 +2,7 @@ package edu.baylor.ecs.csi5324.ws;
 
 import com.google.gson.Gson;
 import edu.baylor.ecs.csi5324.event.MessageEvent;
-import edu.baylor.ecs.csi5324.model.ProduceMessage;
+import edu.baylor.ecs.csi5324.message.WsProduceMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -26,14 +26,14 @@ public class RawWsHandler extends TextWebSocketHandler implements ApplicationLis
         log.info("Received " + message.getPayload());
 
         try {
-            broadcast(new ProduceMessage("generic reply"));
+            broadcast(new WsProduceMessage("generic reply"));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
     }
 
-    private void broadcast(ProduceMessage message) throws IOException {
-        TextMessage textMessage = new TextMessage(new Gson().toJson(message, ProduceMessage.class));
+    private void broadcast(WsProduceMessage message) throws IOException {
+        TextMessage textMessage = new TextMessage(new Gson().toJson(message, WsProduceMessage.class));
         log.info("Sending " + textMessage.getPayload());
 
         for (WebSocketSession webSocketSession : sessions) {
@@ -46,7 +46,7 @@ public class RawWsHandler extends TextWebSocketHandler implements ApplicationLis
         log.info("Connected");
         sessions.add(session);
         try {
-            broadcast(new ProduceMessage("connected"));
+            broadcast(new WsProduceMessage("connected"));
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -61,7 +61,7 @@ public class RawWsHandler extends TextWebSocketHandler implements ApplicationLis
     @Override
     public void onApplicationEvent(MessageEvent messageEvent) {
         try {
-            broadcast(new ProduceMessage(messageEvent.getEmail().toString()));
+            broadcast(new WsProduceMessage(messageEvent.getJmsMessage().toString()));
         } catch (IOException e) {
             log.error(e.getMessage());
         }

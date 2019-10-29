@@ -1,4 +1,4 @@
-package edu.baylor.ecs.csi5324.model;
+package edu.baylor.ecs.csi5324.message;
 
 import lombok.*;
 
@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ConsumeMessage {
+public class WsProduceMessage {
     private String content;
 }
