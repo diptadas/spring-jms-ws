@@ -1,8 +1,10 @@
 package edu.baylor.ecs.csi5324.ws;
 
 import com.google.gson.Gson;
+import edu.baylor.ecs.csi5324.event.MessageEvent;
 import edu.baylor.ecs.csi5324.model.ProduceMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,9 +17,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 @Slf4j
-public class RawWsHandler extends TextWebSocketHandler {
+public class RawWsHandler extends TextWebSocketHandler implements ApplicationListener<MessageEvent> {
 
-    private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
+    private static List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
@@ -30,7 +32,7 @@ public class RawWsHandler extends TextWebSocketHandler {
         }
     }
 
-    public void broadcast(ProduceMessage message) throws IOException {
+    private void broadcast(ProduceMessage message) throws IOException {
         TextMessage textMessage = new TextMessage(new Gson().toJson(message, ProduceMessage.class));
         log.info("Sending " + textMessage.getPayload());
 
@@ -54,5 +56,14 @@ public class RawWsHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         log.info("Closed");
         sessions.remove(session);
+    }
+
+    @Override
+    public void onApplicationEvent(MessageEvent messageEvent) {
+        try {
+            broadcast(new ProduceMessage(messageEvent.getEmail().toString()));
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
     }
 }
